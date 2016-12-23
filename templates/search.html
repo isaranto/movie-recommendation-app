@@ -1,0 +1,144 @@
+<html>
+<head>
+<title>MovieRama - Your personilised recommendation engine</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" href="../static/style.css">
+		<link rel="shortcut icon" type="image/png" href="../img/favicon.png"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="../static/script.js"></script>
+</head>
+
+
+<body>
+<div id="logo"><a href="/"> <img src="http://www.kidlit.org/wp-content/uploads/2016/09/movies.jpg"/></a>
+		</div>
+<div class="container">
+	<div class="row">
+		{% block body %}
+		<section class="content">
+			<h1>MovieRama</h1>
+			<div id="custom-search-input">
+                <div  class="input-group col-md-12">
+                <input id ="search-text" type="text" name = "search-text" class="form-control input-lg" placeholder="type a movie" />
+                    <span id="search-icon" class="input-group-btn">                  
+                        <button id="search-button" type="submit" value=Search class="btn btn-info btn-lg" name ="submit" type="button">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+            {% if query_text %}
+            <div class="col-md-8 my-container">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="table-container">
+							<table class="table table-filter">
+							{% if query_text and total !=0%}
+							 <thead id="results-header" class="alert alert-success"> You searched for :{{query_text}}. {{ total }} results found!
+							 Showing Page #{{page}} of total
+							 </thead>
+							 {% elif query_text and total==0 %}
+							 <div class="alert alert-danger" role="alert">It's embarrasing! We found nothing for {{query_text}}. Maybe look for something else...</div>
+							 {% endif %}	
+								<tbody>{% if total!=0 %}
+								<th></th>
+								<th>Title</th>
+								<th>Description</th>
+								<th>Release Year</th>
+								{% endif %}
+								{% set row = False %}
+								{% for res in results %}
+								{% if row %}
+									  <tr class="odd">
+								{% else %}
+									    <tr class="even">
+								{% endif %}
+										<td class="doc-poster">  <img src="{{res['poster_path']}}"/></td>
+										<td class="doc-title">{{ res["title"] }}</td>								
+										<td class="doc-title">{{ res["title"] }}</td>
+										<td class="doc-text" >{{ res["overview"] }}</td>
+										<td> 
+										
+										</td>																				
+									</tr>
+									{% if row %}
+									  <tr class="note-row odd">
+								{% else %}
+									    <tr class="note-row even">
+								{% endif %}	
+									<th colspan="5"><button type="button" class="note-header btn btn-default btn-lg">
+  <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span> Movies you might also like:
+</button></th></tr>
+									{% if row %}
+									  <tr class="notes-content odd">
+									  {% set row = not row %}
+								{% else %}
+									    <tr class="notes-content even">
+									    {% set row = not row %}
+								{% endif %}	
+									<td colspan="5" class="note-td">
+										<ul>
+										{% for rec in res["recommendations"] %}
+											<li><a href="/{{rec}}/1"> {{rec}}</a></li>								
+											
+											{% endfor %}
+											</td></tr></ul>
+									  {% endfor %}
+									  </ul>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div>
+					{% if total!=0 %}
+					<form action="page" method=post>
+					<textarea style= "display:none" name=current_page rows=5 cols=10>{{page}} </textarea>
+					<nav>
+					  <ul class="pagination">
+					    <li class="page-item">
+					      <a class="page-link" href="/{{query_text}}/1" aria-label="Previous">
+					        <span aria-hidden="true">&laquo;</span>
+					        <span class="sr-only">Previous</span>
+					      </a>
+					    </li>
+					    <li class="page-item"><a name="page" class="page-link" href="/{{query_text}}/1">1</a></li>
+					    <li class="page-item"><a name="page" class="page-link" href="/{{query_text}}/2">2</a></li>
+					    <li class="page-item"><a name="page" class="page-link" href="/{{query_text}}/3">3</a></li>
+					    <li class="page-item"><a name="page" class="page-link" href="/{{query_text}}/4">4</a></li>
+					    <li class="page-item"><a name="page" class="page-link" href="/{{query_text}}/5">5</a></li>
+					    <li class="page-item"><a name="page" class="page-link" href="/{{query_text}}/6">6</a></li>
+					    <li class="page-item"><a name="page" class="page-link" href="/{{query_text}}/7">7</a></li>
+					    <li class="page-item"><a name="page" class="page-link" href="/{{query_text}}/8">8</a></li>
+					    <li class="page-item"><a name="page" class="page-link" href="/{{query_text}}/9">9</a></li>
+					    <li class="page-item"><a name="page" class="page-link" href="/{{query_text}}/10">10</a></li>
+					    <li class="page-item">
+					      <a class="page-link" href="/{{query_text}}/11" aria-label="Next">
+					        <span aria-hidden="true">&raquo;</span>
+					        <span class="sr-only">Next</span>
+					      </a>
+					    </li>
+					  </ul>
+					</nav>
+				</div>
+				</form>
+				{% endif %}
+				{% else %}
+				<div class="empty-body"></div>
+				{% endif %}				
+			</div>
+		</section>
+		{% endblock %}
+	</div>
+</div>
+<div class="content-footer">	
+				<p id="team">
+						 Ilias Sarantopoulos</a>
+					</p>
+					<p id="info">
+						MovieRama<br>
+						Workable assignment Dec - 2016 <br></a>
+					</p>
+				</div>
+</body>
+</html>
