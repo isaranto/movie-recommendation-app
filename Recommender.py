@@ -4,6 +4,8 @@ import numpy as np
 import pandas as pd
 from scipy import sparse
 from sklearn.metrics import pairwise_distances
+import csv
+
 class Recommender:
     def __init__(self, metric='cosine'):
         self.metric = metric
@@ -13,8 +15,14 @@ class Recommender:
         header = ['user_id', 'movie_id', 'rating']
         df = pd.read_csv('ratings.csv', sep=',', names=header)
         n_users = df.user_id.unique().shape[0]
-        n_movies = df.item_id.unique().shape[0]
-        ratings = sparse.csr_matrix(n_users, n_movies)
+        n_movies = df.movie_id.unique().shape[0]
+        ratings = sparse.csr_matrix((n_users, n_movies))
+        with open('ratings.csv', 'r') as fp:
+            reader = csv.reader(fp, delimiter=',')
+            next(reader, None)  # skip header
+            for row in reader:
+                ratings[int(row[0])-1, int(row[1])-1] = int(row[2])
+
         return ratings
 
     def make_predictions(self):
