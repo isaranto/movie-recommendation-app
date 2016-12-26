@@ -5,7 +5,6 @@ import requests, json
 import random
 import actions
 
-
 app = Flask(__name__)
 app.config.from_object(__name__)
 

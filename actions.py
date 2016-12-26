@@ -6,9 +6,9 @@ from Model import *
 from picklecache import *
 import os
 import datetime
-import Recommender
+from Recommender import *
 
-#@cache('./cache/search')
+@cache('./cache/search')
 def search(user_query, page_num=1):
     """
     Uses the MovieDB API to search for the given query.
@@ -29,20 +29,35 @@ def search(user_query, page_num=1):
         total_pages = json_data["total_pages"]
         total_results = json_data["total_results"]
         movies = []
+        recommender = Recommender()
         for r in json_data["results"]:
             m = Movie(r)
-            recommendations = get_recommendations(m)
             results = Movie(r).__dict__
+            recom_ids = get_recommendations(recommender, m)
+            recommendations = []
+            for id in recom_ids:
+                tuple = (get_movie_title(id),id)
+                recommendations.append(tuple)
             results["recommendations"] = recommendations
             movies.append(results)
-
     return movies, total_pages, total_results
 
 
-def get_recommendations(m):
-    return [("Lord of the Rings", "https://www.themoviedb.org/movie/"+str(120)),
-            ("Fight Club", "https://www.themoviedb.org/movie/"+str(4))]
+def get_recommendations(rec, m):
+    return rec.recommend_movies(m.id)
+    """return [("Lord of the Rings", "https://www.themoviedb.org/movie/"+str(120)),
+            ("Fight Club", "https://www.themoviedb.org/movie/"+str(4))]"""
 
+def get_movie_title(id):
+    url = "https://api.themoviedb.org/3/movie/{0}".format(id)
+    payload = {'api_key': auth.API_KEY}
+    response = requests.request("GET", url, data=payload)
+    movie_dict = json.loads(response.content)
+    try:
+        title = movie_dict['title']
+    except KeyError:
+        title = "Unknown Title"
+    return title
 
 @cache('./cache/genres')
 def get_genres(_):
@@ -89,10 +104,10 @@ def clear_cache():
                 os.remove("./cache/"+folder+"/"+file)
 
 if __name__ == "__main__":
-    #movies, total_pages, total_results = search("lord of the rings")
+    movies, total_pages, total_results = search("Ariel")
     # pprint.pprint(results)
     #pprint.pprint(get_genres("_"))
     #movie = Movie(results[1])
     #get_poster(movie)
     #pprint.pprint(movies)
-    clear_cache()
+    #clear_cache()
