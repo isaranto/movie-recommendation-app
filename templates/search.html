@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>MovieRama - Your personilised recommendation engine</title>
+<title>MovieRama - Your movie recommendation engine</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 		<link rel="stylesheet" href="../static/style.css">
 		<link rel="shortcut icon" type="image/png" href="../img/favicon.png"/>
@@ -79,7 +79,7 @@
 									<td colspan="5" class="note-td">
 										<ul>
 										{% for rec in res["recommendations"] %}
-											<li><a href="/{{rec}}/1"> {{rec}}</a></li>								
+											<li><a href="{{rec[1]}}"> {{rec[0]}}</a></li>								
 											
 											{% endfor %}
 											</td></tr></ul>

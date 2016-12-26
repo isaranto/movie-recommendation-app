@@ -23,17 +23,6 @@ def init_json():
     with open('movie_data.json', 'w') as fp:
         json.dump([], fp)
 
-def get_all_movies():
-    first = True
-    with open('movie_data.txt', mode='a') as fp:
-        for i in range(271110, 271114):
-            m = get_movie(i)
-            if first:
-                header = '|'.join([k for k, v in m.__dict__.iteritems()])
-                first = False
-            fp.write(header+"\n")
-            row = '|'.join([str(v) for k,v in m.__dict__.iteritems()])
-            fp.write(row+"\n")
 
 
 def write_json():

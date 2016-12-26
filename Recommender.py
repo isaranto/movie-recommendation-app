@@ -5,11 +5,12 @@ import pandas as pd
 from scipy import sparse
 from sklearn.metrics import pairwise_distances
 import csv
+from picklecache import *
 
 class Recommender:
     def __init__(self, metric='cosine'):
         self.metric = metric
-        self.ratings = self.load_data()
+        self.predictions = self.make_predictions()
 
     def load_data(self):
         header = ['user_id', 'movie_id', 'rating']
@@ -25,10 +26,27 @@ class Recommender:
 
         return ratings
 
+
     def make_predictions(self):
-        movie_similarity = pairwise_distances(self.ratings.T, metric='cosine')
-        predictions = self.ratings.dot(movie_similarity) / np.array([np.abs(movie_similarity).sum(axis=1)])
+        try:
+            print "loading..."
+            predictions = np.load('./cache/recommendations/predictions.npy')
+        except IOError:
+            print "recalculating..."
+            ratings = self.load_data()
+            movie_similarity = pairwise_distances(ratings.T, metric='cosine')
+            predictions = ratings.dot(movie_similarity) / np.array([np.abs(movie_similarity).sum(axis=1)])
+            np.save('./cache/recommendations/predictions.npy', predictions)
         return predictions
 
-if __name__=='__main__':
-    red = Recommender('cosine')
+    def recommend_movies(self, movie_id):
+        print len(self.predictions[:, movie_id-1])
+        movie_vector = self.predictions[:, movie_id-1]
+        print movie_vector
+        top_five_ids = movie_vector.argsort()[-5:][::-1]+1
+        print top_five_ids
+        print movie_vector[46]
+
+if __name__ == '__main__':
+    rec = Recommender('cosine')
+    rec.recommend_movies(2)

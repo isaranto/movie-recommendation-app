@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>MovieRama - Your movie recommendation engine</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" href="../static/style.css">
+		<link rel="shortcut icon" type="image/png" href="../img/favicon.png"/>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="../static/script.js"></script>
+</head>
+
+
+<body>
+<div id="logo"><a href="/"> <img src="http://www.kidlit.org/wp-content/uploads/2016/09/movies.jpg"/></a>
+		</div>
+<div class="container">
+	<div class="row">
+		{% block body %}
+		<section class="content">
+			<h1>MovieRama</h1>
+			<div id="custom-search-input">
+                <div  class="input-group col-md-12">
+                <input id ="search-text" type="text" name = "search-text" class="form-control input-lg" placeholder="type a movie" />
+                    <span id="search-icon" class="input-group-btn">                  
+                        <button id="search-button" type="submit" value=Search class="btn btn-info btn-lg" name ="submit" type="button">
+                            <i class="glyphicon glyphicon-search"></i>
+                        </button>
+                    </span>
+                </div>
+            	</div>            			
+			</div>
+		</section>
+		{% endblock %}
+	</div>
+</div>
+<div class="content-footer">	
+				<p id="team">
+						 Ilias Sarantopoulos</a>
+					</p>
+					<p id="info">
+						MovieRama<br>
+						Workable assignment Dec - 2016 <br></a>
+					</p>
+				</div>
+</body>
+</html>

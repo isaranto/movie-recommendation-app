@@ -6,6 +6,7 @@ from Model import *
 from picklecache import *
 import os
 import datetime
+import Recommender
 
 #@cache('./cache/search')
 def search(user_query, page_num=1):
@@ -16,7 +17,7 @@ def search(user_query, page_num=1):
     :param page_num:
     :return:
     """
-    if user_query=="start_page":
+    if user_query == "start_page":
         total_pages = 0
         total_results = 0
         movies = []
@@ -39,7 +40,8 @@ def search(user_query, page_num=1):
 
 
 def get_recommendations(m):
-    return ["Lord of the Rings", "Fight Club"]
+    return [("Lord of the Rings", "https://www.themoviedb.org/movie/"+str(120)),
+            ("Fight Club", "https://www.themoviedb.org/movie/"+str(4))]
 
 
 @cache('./cache/genres')
