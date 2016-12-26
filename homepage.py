@@ -10,9 +10,9 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 
 @app.route('/')
-def start_page(query="", page=1):
+def start_page(query="start_page", page=1):
     results, pages, total = actions.search(query)
-    return render_template('search.html', results=results, total=total, query_text=query, page=page)
+    return render_template('search.html', results=results, total=total, query_text=query, page=page, pages=pages)
 
 
 @app.route('/<query>/<page>', methods=['GET', 'POST'])
@@ -20,7 +20,7 @@ def show_entries(query="", page=1):
     if request.method == 'POST':
         query = request.form["search-text"]
     results, pages, total = actions.search(query)
-    return render_template('search.html', results=results, total=total, query_text=query, page=page)
+    return render_template('search.html', results=results, total=total, query_text=query, page=page, pages=pages)
 
 
 @app.route('/search', methods=['POST'])

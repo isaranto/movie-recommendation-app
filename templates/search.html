@@ -35,7 +35,7 @@
 							<table class="table table-filter">
 							{% if query_text and total !=0%}
 							 <thead id="results-header" class="alert alert-success"> You searched for :{{query_text}}. {{ total }} results found!
-							 Showing Page #{{page}} of total
+							 Showing Page #{{page}} of {{pages}}
 							 </thead>
 							 {% elif query_text and total==0 %}
 							 <div class="alert alert-danger" role="alert">It's embarrasing! We found nothing for {{query_text}}. Maybe look for something else...</div>
@@ -55,8 +55,8 @@
 								{% endif %}
 										<td class="doc-poster">  <img src="{{res['poster_path']}}"/></td>
 										<td class="doc-title">{{ res["title"] }}</td>								
-										<td class="doc-title">{{ res["title"] }}</td>
-										<td class="doc-text" >{{ res["overview"] }}</td>
+										<td class="doc-overview">{{ res["overview"] }}</td>
+										<td class="doc-date" >{{ res["release_year"] }}</td>
 										<td> 
 										
 										</td>																				

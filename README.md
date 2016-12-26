@@ -1,2 +1,6 @@
-# workable
-Movie Recommendation app
+# MovieRama - Movie Recommendation app
+This is a movie recommendation system using a collaborative filtering approach. I decided to use item-item collaborative filtering due 
+to the fact that in the working prototype there is no specific user that has logged in, hence the proposed engine is not personilised. This way an item is recommended because users that liked the movie shown also liked the recommended one. This way there is a universal list of recommendations for each movie.
+The alternative approach would be to use user-item collaborative filtering to achieve better, personilised results. In that case the recommendation would be in the form "users who are similar to you also liked". The difference is that this way, the recommended items below each movie would be different for each user.
+
+The script download.py serves the purpose of generating a dataset. We download movie info from MovieDB and save them into a json file. I have downloaded the movies with ids 1-10000. Afterwards we randomly generate 200000 ratings from 1000 users.
