@@ -57,13 +57,13 @@ def get_movie_title(id):
     payload = {'api_key': auth.API_KEY}
     response = requests.request("GET", url, data=payload)
     movie_dict = json.loads(response.content)"""
-    if os.path.isfile(auth.app_path+'cache/movies.pickle'):
-        with open(auth.app_path+'cache/movies.pickle', 'r') as handle:
+    if os.path.isfile(auth.app_path+'cache/movies/movies.pickle'):
+        with open(auth.app_path+'cache/movies/movies.pickle', 'r') as handle:
             movies = pickle.load(handle)
     else:
         with open(auth.app_path+'movies.json', 'r') as fp:
             movies = json.loads(fp.read(), encoding="utf-8")
-        with open(auth.app_path+'cache/movies.pickle', 'w') as handle:
+        with open(auth.app_path+'cache/movies/movies.pickle', 'w') as handle:
             pickle.dump(movies, handle, protocol=pickle.HIGHEST_PROTOCOL)
     title = ""
     try:
@@ -123,10 +123,8 @@ def clear_cache(all=False):
     for folder in os.listdir(auth.app_path+"cache"):
         for _file in os.listdir(auth.app_path+"cache/"+folder):
             try:
-                print auth.app_path+"cache/"+folder+"/"+_file
                 if os.path.getmtime(auth.app_path+"cache/"+folder+"/"+_file) < unix_time:
                     os.remove(auth.app_path+"cache/"+folder+"/"+_file)
-                    print auth.app_path+"cache/"+folder+"/"+_file
             except OSError as e:
                 # also delete the files under /cache/
                 if ".tmp" not in e.filename:
@@ -134,7 +132,7 @@ def clear_cache(all=False):
                         os.remove(e.filename)
 
 if __name__ == "__main__":
-    movies, total_pages, total_results = search("ariel")
+    movies, total_pages, total_results = search("mob")
     # pprint.pprint(results)
     # pprint.pprint(get_genres("_"))
     # movie = Movie(results[1])
