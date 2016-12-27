@@ -24,7 +24,6 @@ def init_json():
         json.dump([], fp)
 
 
-
 def write_json():
     with open('movie_data.json', mode='w') as feedsjson:
         data = []

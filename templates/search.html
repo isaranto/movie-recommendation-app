@@ -34,7 +34,8 @@
 						<div class="table-container">
 							<table class="table table-filter">
 							{% if query_text and total !=0%}
-							 <thead id="results-header" class="alert alert-success"> You searched for :{{query_text}}. {{ total }} results found!
+							 <thead id="results-header" class="alert alert-success"> You searched for :
+							  <b>{{query_text}}</b>. {{ total }} results found!
 							 Showing Page #{{page}} of {{pages}}
 							 </thead>
 							 {% elif query_text and total==0 %}
