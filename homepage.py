@@ -3,7 +3,7 @@ from flask import Flask, request, session, g, redirect, url_for, \
 from contextlib import closing
 import requests, json
 import random
-import actions
+from movierama import actions
 
 app = Flask(__name__)
 app.config.from_object(__name__)
