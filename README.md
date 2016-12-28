@@ -2,7 +2,10 @@
 ![Alt text](/img/movierama.png?raw=true "MovieRama")
 
 Instructions:
+
 In order to run the flask app download the data (ratings and movie info) from [my Dropbox](https://www.dropbox.com/s/dsyxu59ax3qi3eb/movierama-data.zip?dl=0) and run homepage.py. Also you will need to provide the API key and app directory in the movierama/athenticate.py file.
+
+
 This is a movie recommendation system using a collaborative filtering approach. I decided to use item-item collaborative filtering due to the fact that in the working prototype there is no specific user that has logged in, hence the proposed engine is not personilised. This way an item is recommended because users that liked the movie shown also liked the recommended one. This way there is a universal list of recommendations for each movie. After creating the user-item matrix. we create the item-item matrix which is being used for our predictions taking into account only the users who have rated the specified movie.
 
 Alternative approaches:
